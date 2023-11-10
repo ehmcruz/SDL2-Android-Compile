@@ -55,3 +55,44 @@ Download ready libraries with minimal support android-16:
 Build an example with SDL2:  
 [https://github.com/AlexanderAgd/SDL2-Android-Example](https://github.com/AlexanderAgd/SDL2-Android-Example)  
 Enjoy :)  
+
+# EHMCRUZ notes
+
+## Compile SDL only
+
+# compilar sdl para android
+
+Based on
+https://github.com/AlexanderAgd/SDL2-Android
+
+https://github.com/AlexanderAgd/SDL2-Android-Example
+
+### bash script to compile SDL in android
+
+ANDROID_STUDIO_SDK=$HOME/Android/Sdk
+ANDROID_STUDIO_NDK=$ANDROID_STUDIO_SDK/ndk/26.1.10909125
+#NDK_OPTIONS="$NDK_OPTIONS"
+SDL_SOURCE_DIR=$HOME/Android/SDL/SDL-release-2.28.5
+SDL_INSTALL_DIR=$HOME/Android/SDL
+ARCH="arm64-v8a"
+API="33"
+OUTPUT_DIR=$SDL_INSTALL_DIR
+
+### it is not clear if NDK_PROJECT_PATH should be the path to the project being compiled, or the path to NDK
+
+$ANDROID_STUDIO_NDK/ndk-build -C  $SDL_SOURCE_DIR NDK_PROJECT_PATH=$SDL_SOURCE_DIR APP_BUILD_SCRIPT=$SDL_SOURCE_DIR/Android.mk APP_PLATFORM=android-$API APP_ABI=$ARCH NDK_OUT=$OUTPUT_DIR NDK_LIBS_OUT=$OUTPUT_DIR/lib NDK_LOG=1
+
+
+—------------------
+
+## debug over wifi
+
+https://developer.android.com/studio/command-line/adb?hl=pt-br
+
+Go to developer options, Wifi debug, get ip and port.
+
+cd ~/Android/Sdk/platform-tools
+./adb pair 192.168.10.134:39641
+./adb connect 192.168.10.134:42247
+
+Note: the two ports may be different
